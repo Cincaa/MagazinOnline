@@ -20,12 +20,6 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<User> findAll() {
-        List<User> users = new LinkedList<>();
-        userRepository.findAll().iterator().forEachRemaining(users::add);
-        return users;
-    }
-
 
     public User findById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
@@ -35,15 +29,6 @@ public class UserService {
         return userOptional.get();
     }
 
-
-    public void deleteById(Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (!userOptional.isPresent()) {
-            throw new RuntimeException("User not found!");
-        }
-
-        userRepository.deleteById(id);
-    }
 
 
     public User save(User user) throws Exception {
