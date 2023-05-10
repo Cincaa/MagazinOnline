@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,5 +43,21 @@ public class UserServiceTest {
         User userResult = userService.findById(id);
         assertEquals(userResult, user);
         verify(userRepository, times(2)).findById(id);
+    }
+
+
+    @Test
+    public void findAll() {
+        User user = new User();
+        user.setId(id);
+        List<User> users = new LinkedList<>();
+        users.add(user);
+
+        when(userRepository.findAll()).thenReturn(users);
+
+        List<User> result = userService.findAll();
+        assertEquals(result, users);
+        verify(userRepository, times(1)).findAll();
+
     }
 }
