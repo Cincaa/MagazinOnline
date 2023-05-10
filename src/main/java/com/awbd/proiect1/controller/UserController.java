@@ -43,4 +43,13 @@ public class UserController {
     }
 
 
+    // http://localhost:8080/users/list
+    @RequestMapping("/list")
+    public ModelAndView usersList() {
+        ModelAndView modelAndView = new ModelAndView("users");
+        List<User> users = userService.findAll();
+        modelAndView.addObject("users", users);
+        return modelAndView;
+    }
+
 }
