@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -47,5 +48,18 @@ class ProductServiceTest {
         when(productRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(products));
         List<Product> productResult = productService.findAll(0,10, "id");
         assertEquals(products.size(),productResult.size());
+    }
+
+    @Test
+    public void deleteById() {
+        Product product = new Product();
+        product.setId(id);
+
+        when(productRepository.findById(id)).thenReturn(Optional.of(product));
+
+        productService.deleteById(id);
+
+        verify(productRepository, times(1)).findById(id);
+        verify(productRepository, times(1)).deleteById(id);
     }
 }
