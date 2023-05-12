@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -60,5 +61,18 @@ class ProductServiceTest {
         assertEquals(productResult, product);
 
         verify(productRepository, times(1)).save(product);
+    }
+
+    @Test
+    public void deleteById() {
+        Product product = new Product();
+        product.setId(id);
+
+        when(productRepository.findById(id)).thenReturn(Optional.of(product));
+
+        productService.deleteById(id);
+
+        verify(productRepository, times(1)).findById(id);
+        verify(productRepository, times(1)).deleteById(id);
     }
 }

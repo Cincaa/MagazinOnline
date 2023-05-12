@@ -37,4 +37,13 @@ public class ProductService {
         Product savedProduct = productRepository.save(product);
         return savedProduct;
     }
+
+    public void deleteById(Long id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (!productOptional.isPresent()) {
+            throw new RuntimeException("Product not found!");
+        }
+
+        productRepository.deleteById(id);
+    }
 }

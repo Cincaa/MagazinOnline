@@ -22,6 +22,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
+            <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
         </tr>
         </thead>
         <tr th:each="product, stat : ${products}"
@@ -29,6 +30,8 @@
             <td th:text="${product.id}">1</td>
             <td th:text="${product.name}">Product 1</td>
             <td th:text="'$' + ${product.price}">Price</td>
+            <td sec:authorize="hasAuthority('ADMIN')">
+                <a href="#" th:href="@{'/products/delete/' + ${product.id}}">Delete</a></td>
         </tr>
     </table>
 </div>

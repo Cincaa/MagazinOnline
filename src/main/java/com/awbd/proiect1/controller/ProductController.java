@@ -51,6 +51,14 @@ public class ProductController {
         return "redirect:/products/list" ;
     }
 
+    // http://localhost:8080/products/delete/1
+    @RequestMapping("/delete/{id}")
+    public String deleteById(@PathVariable String id){
+        productService.deleteById(Long.valueOf(id));
+        return "redirect:/products/list";
+    }
+
+
     public void setProductService(ProductService productService) {
         this.productService = productService;
     }
