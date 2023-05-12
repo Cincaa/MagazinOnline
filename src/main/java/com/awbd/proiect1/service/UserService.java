@@ -54,4 +54,12 @@ public class UserService {
 
         return savedUser;
     }
+
+
+    public List<User> findAll() {
+        List<User> users = new LinkedList<>();
+        userRepository.findAll().iterator().forEachRemaining(users::add);
+        return users;
+    }
+
 }

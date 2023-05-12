@@ -51,6 +51,19 @@ class ProductServiceTest {
     }
 
     @Test
+    public void save() {
+        Product product = new Product();
+        product.setId(id);
+
+        when(productRepository.save(product)).thenReturn(product);
+
+        Product productResult = productService.save(product);
+        assertEquals(productResult, product);
+
+        verify(productRepository, times(1)).save(product);
+    }
+
+    @Test
     public void deleteById() {
         Product product = new Product();
         product.setId(id);
