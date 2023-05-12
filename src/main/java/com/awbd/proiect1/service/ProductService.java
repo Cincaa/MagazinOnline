@@ -32,4 +32,13 @@ public class ProductService {
             return new ArrayList<Product>();
         }
     }
+
+    public void deleteById(Long id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (!productOptional.isPresent()) {
+            throw new RuntimeException("Product not found!");
+        }
+
+        productRepository.deleteById(id);
+    }
 }
