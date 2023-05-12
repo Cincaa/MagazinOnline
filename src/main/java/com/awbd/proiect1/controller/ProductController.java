@@ -33,6 +33,23 @@ public class ProductController {
         return modelAndView;
     }
 
+    // http://localhost:8080/products/new
+    @RequestMapping("/new")
+    public String newProduct(Model model) {
+        model.addAttribute("product", new Product());
+        return "product_form";
+    }
+
+    @PostMapping("/save")
+    public String saveOrUpdate(@ModelAttribute Product product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "product_form";
+        }
+        if (product.getId() == null) {
+            productService.save(product);
+        }
+        return "redirect:/products/list" ;
+    }
 
     public void setProductService(ProductService productService) {
         this.productService = productService;

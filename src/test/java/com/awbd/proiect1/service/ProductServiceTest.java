@@ -48,4 +48,17 @@ class ProductServiceTest {
         List<Product> productResult = productService.findAll(0,10, "id");
         assertEquals(products.size(),productResult.size());
     }
+
+    @Test
+    public void save() {
+        Product product = new Product();
+        product.setId(id);
+
+        when(productRepository.save(product)).thenReturn(product);
+
+        Product productResult = productService.save(product);
+        assertEquals(productResult, product);
+
+        verify(productRepository, times(1)).save(product);
+    }
 }

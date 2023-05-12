@@ -32,4 +32,9 @@ public class ProductService {
             return new ArrayList<Product>();
         }
     }
+
+    public Product save(Product product) {
+        Product savedProduct = productRepository.save(product);
+        return savedProduct;
+    }
 }
