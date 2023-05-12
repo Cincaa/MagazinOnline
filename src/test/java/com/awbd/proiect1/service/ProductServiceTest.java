@@ -75,4 +75,29 @@ class ProductServiceTest {
         verify(productRepository, times(1)).findById(id);
         verify(productRepository, times(1)).deleteById(id);
     }
+
+    @Test
+    public void findById() {
+        Product product = new Product();
+        product.setId(id);
+
+        when(productRepository.findById(id)).thenReturn(Optional.of(product));
+
+        Product productResult = productService.findById(id);
+        assertEquals(productResult, product);
+        verify(productRepository, times(1)).findById(id);
+    }
+
+    @Test
+    public void edit() {
+        Product product = new Product();
+        product.setId(id);
+
+        when(productRepository.findById(id)).thenReturn(Optional.of(product));
+
+        Product productResult = productService.edit(product);
+
+        verify(productRepository, times(1)).findById(id);
+        verify(productRepository, times(1)).save(product);
+    }
 }
