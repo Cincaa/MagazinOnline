@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>User details</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css"/>
+  <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div th:insert="fragments/navbar :: navbar">  </div>
+
+
+<div class="container mt-5">
+  <h5 class="panel-title" th:text="'Username: ' + ${user.username}">Username</h5>
+  <h5 class="panel-title" th:text="'Name: ' + ${user.fullName}">Name</h5>
+  <h5 class="panel-title" th:text="'User type: ' + ${user.userType}">Type</h5>
+  <h5 class="panel-title" th:text="'Registration date: ' + ${user.regDate}">Reg Date</h5>
+</div>
+
+</body>
+
+</html>
