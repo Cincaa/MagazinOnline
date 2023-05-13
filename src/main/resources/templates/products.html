@@ -22,6 +22,8 @@
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Info</th>
+            <th sec:authorize="hasAuthority('CUSTOMER')">Add to cart</th>
             <th sec:authorize="hasAuthority('ADMIN')">Edit</th>
             <th sec:authorize="hasAuthority('ADMIN')">Delete</th>
         </tr>
@@ -31,8 +33,18 @@
             <td th:text="${product.id}">1</td>
             <td th:text="${product.name}">Product 1</td>
             <td th:text="'$' + ${product.price}">Price</td>
+
+            <td><a href="#" th:href="@{'/products/details/' + ${product.id}}">Info</a></td>
+
+            <td sec:authorize="hasAuthority('CUSTOMER')">
+                <a href="#" th:href="@{'/cart/add/' + ${product.id}}">
+                    <i class="fa fa-plus" style="color: green;"></i>
+                </a>
+            </td>
+
             <td sec:authorize="hasAuthority('ADMIN')">
                 <a href="#" th:href="@{'/products/edit/' + ${product.id}}">Edit</a></td>
+
             <td sec:authorize="hasAuthority('ADMIN')">
                 <a href="#" th:href="@{'/products/delete/' + ${product.id}}">Delete</a></td>
         </tr>

@@ -32,7 +32,13 @@ public class ProductController {
         modelAndView.addObject("products", products);
         return modelAndView;
     }
-
+    // http://localhost:8080/products/details/1
+    @GetMapping("/details/{id}")
+    public String showById(@PathVariable String id, Model model) {
+        model.addAttribute("product", productService.findById(Long.valueOf(id)));
+        model.addAttribute("review", new Review());
+        return "product_details";
+    }
     // http://localhost:8080/products/new
     @RequestMapping("/new")
     public String newProduct(Model model) {
