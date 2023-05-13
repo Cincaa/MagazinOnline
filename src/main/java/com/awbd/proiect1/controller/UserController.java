@@ -52,4 +52,11 @@ public class UserController {
         return modelAndView;
     }
 
+
+    // http://localhost:8080/users/delete/1
+    @RequestMapping("/delete/{id}")
+    public String deleteById(@PathVariable String id){
+        userService.deleteById(Long.valueOf(id));
+        return "redirect:/users/list";
+    }
 }

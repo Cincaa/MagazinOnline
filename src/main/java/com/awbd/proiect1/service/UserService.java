@@ -62,4 +62,12 @@ public class UserService {
         return users;
     }
 
+    public void deleteById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (!userOptional.isPresent()) {
+            throw new RuntimeException("User not found!");
+        }
+
+        userRepository.deleteById(id);
+    }
 }
