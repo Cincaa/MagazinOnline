@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Info</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div th:insert="fragments/navbar :: navbar">  </div>
+
+
+<div class="container mt-5">
+    <h2 class="panel-title" th:text="${product.name}">Product</h2>
+    <h3 class="panel-title" th:text="${product.price}">Price</h3>
+
+</div>
+
+
+<div class="container" sec:authorize="hasAuthority('CUSTOMER')">
+
+    <form th:object="${review}" th:action="@{/add_review/{id}(id=${product.id})}" method="post">
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="container">
+            <div class="form-group">
+                <label>Add review</label>
+                <textarea class="form-control" rows="3" th:field="*{comment}"></textarea>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="container mt-5">
+    <div th:each="review: ${reviews}">
+        <div class="mb-3">
+            <h6 th:text="${review.user.fullName}"></h6>
+            <p th:text="${review.comment}"></p>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
