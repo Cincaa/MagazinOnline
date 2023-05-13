@@ -60,4 +60,22 @@ public class UserServiceTest {
         verify(userRepository, times(1)).findAll();
 
     }
+
+
+    @Test
+    public void deleteById() {
+
+        Throwable exception = assertThrows(RuntimeException.class, () -> userService.findById(id));
+        assertEquals("User not found!", exception.getMessage());
+
+        User user = new User();
+        user.setId(id);
+
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+
+        userService.deleteById(id);
+
+        verify(userRepository, times(2)).findById(id);
+        verify(userRepository, times(1)).deleteById(id);
+    }
 }
