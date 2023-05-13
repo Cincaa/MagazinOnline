@@ -40,12 +40,22 @@ public class ProductController {
         return "product_form";
     }
 
+    // http://localhost:8080/products/edit/1
+    @GetMapping("/edit/{id}")
+    public String editById(@PathVariable String id, Model model) {
+        model.addAttribute("product", productService.findById(Long.valueOf(id)));
+        return "product_form";
+    }
+
     @PostMapping("/save")
     public String saveOrUpdate(@ModelAttribute Product product, BindingResult bindingResult) {
         if (bindingResult.hasErrors()){
             return "product_form";
         }
-        if (product.getId() == null) {
+        if (product.getId() != null) {
+            productService.edit(product);
+        }
+        else {
             productService.save(product);
         }
         return "redirect:/products/list" ;
