@@ -40,5 +40,20 @@ public class CartController {
         return modelAndView;
     }
 
+    // http://localhost:8080/cart/add/1
+    @RequestMapping("/add/{id}")
+    public String addToCart(@PathVariable String id, RedirectAttributes redirectAttrs) {
+
+        Authentication auth = SecurityContextHolder.getContext()
+                .getAuthentication();
+
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(String.valueOf(UserType.CUSTOMER)))) {
+
+            cartService.addToCart(auth.getName(), Long.valueOf(id));
+        }
+
+        return "redirect:/products/list";
+    }
+
 
 }

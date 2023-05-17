@@ -34,4 +34,13 @@ public class CartService {
         return products;
     }
 
+    public void addToCart(String username, Long idProduct) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Product product = productRepository.findById(idProduct).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Cart cart = user.getCart();
+
+        cart.getProducts().add(product);
+        cartRepository.save(cart);
+    }
+
 }
