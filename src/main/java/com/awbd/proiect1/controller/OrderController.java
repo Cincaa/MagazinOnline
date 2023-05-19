@@ -32,6 +32,10 @@ public class OrderController {
             List<Order> orders = orderService.findAll();
             modelAndView.addObject("orders", orders);
         }
+        else if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(String.valueOf(UserType.CUSTOMER)))) {
+            List<Order> orders = orderService.findUserOrders(auth.getName());
+            modelAndView.addObject("orders", orders);
+        }
         else {
             modelAndView.addObject("error");
         }
