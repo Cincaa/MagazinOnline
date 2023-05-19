@@ -32,6 +32,14 @@ public class OrderService {
         return orders;
     }
 
+
+    public List<Order> findUserOrders(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        List<Order> orders = user.getOrders();
+        return orders;
+    }
+
+
     public Order placeOrder(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         Cart cart = user.getCart();
