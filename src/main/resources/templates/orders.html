@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css" />
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div th:insert="fragments/navbar :: navbar">  </div>
+
+<div class="container mt-3">
+
+    <table class="table table-hover">
+        <thead class="thead-inverse">
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th>Details</th>
+
+        </tr>
+        </thead>
+        <tr th:each="order, stat : ${orders}"
+            th:class="${stat.odd}? 'table-light':'table-dark'">
+            <td th:text="${order.id}">1</td>
+            <td th:text="${order.orderDate}">Date</td>
+            <td th:text="${order.orderStatus}">Status</td>
+            <td th:text="'$' + ${order.total}">Total</td>
+
+            <td><a href="#" th:href="@{'/orders/details/' + ${order.id}}">Details</a></td>
+
+        </tr>
+    </table>
+</div>
+
+</body>
+
+</html>

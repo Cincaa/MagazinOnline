@@ -9,11 +9,14 @@ import com.awbd.proiect1.repository.CartRepository;
 import com.awbd.proiect1.repository.OrderRepository;
 import com.awbd.proiect1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+@Service
 public class OrderService {
 
     @Autowired
@@ -24,6 +27,13 @@ public class OrderService {
 
     @Autowired
     private CartRepository cartRepository;
+
+
+    public List<Order> findAll() {
+        List<Order> orders = new LinkedList<>();
+        orderRepository.findAll().iterator().forEachRemaining(orders::add);
+        return orders;
+    }
 
     public Order placeOrder(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found"));
