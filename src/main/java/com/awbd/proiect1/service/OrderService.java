@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class OrderService {
@@ -24,6 +25,12 @@ public class OrderService {
 
     @Autowired
     private CartRepository cartRepository;
+
+    public List<Order> findAll() {
+        List<Order> orders = new LinkedList<>();
+        orderRepository.findAll().iterator().forEachRemaining(orders::add);
+        return orders;
+    }
 
     public Order placeOrder(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found"));
