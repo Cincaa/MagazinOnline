@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -67,5 +68,16 @@ public class OrderService {
         Order savedOrder = orderRepository.save(order);
 
         return savedOrder;
+    }
+
+    public List<Product> getProducts(Long id) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if (!orderOptional.isPresent()) {
+            throw new RuntimeException("Order not found!");
+        }
+        Order order = orderOptional.get();
+        List<Product> products = order.getProducts();
+
+        return products;
     }
 }
