@@ -9,11 +9,15 @@ import com.awbd.proiect1.repository.CartRepository;
 import com.awbd.proiect1.repository.OrderRepository;
 import com.awbd.proiect1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class OrderService {
 
     @Autowired
@@ -24,6 +28,20 @@ public class OrderService {
 
     @Autowired
     private CartRepository cartRepository;
+
+
+    public List<Order> findAll() {
+        List<Order> orders = new LinkedList<>();
+        orderRepository.findAll().iterator().forEachRemaining(orders::add);
+        return orders;
+    }
+
+    public List<Order> findUserOrders(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        List<Order> orders = user.getOrders();
+        return orders;
+    }
+
 
     public Order placeOrder(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found"));
@@ -50,5 +68,16 @@ public class OrderService {
         Order savedOrder = orderRepository.save(order);
 
         return savedOrder;
+    }
+
+    public List<Product> getProducts(Long id) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if (!orderOptional.isPresent()) {
+            throw new RuntimeException("Order not found!");
+        }
+        Order order = orderOptional.get();
+        List<Product> products = order.getProducts();
+
+        return products;
     }
 }
