@@ -68,4 +68,13 @@ public class ProductService {
         Product savedProduct = productRepository.save(product1);
         return savedProduct;
     }
+
+    public List<Review> getReviews(Long id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (!productOptional.isPresent()) {
+            throw new RuntimeException("Product not found!");
+        }
+        Product product = productOptional.get();
+        return product.getReviews();
+    }
 }
