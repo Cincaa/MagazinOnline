@@ -21,6 +21,7 @@
             <th>Name</th>
             <th>Price</th>
             <th>Info</th>
+            <th>Remove</th>
         </tr>
         </thead>
         <tr th:each="product, stat : ${products}"
@@ -30,6 +31,12 @@
             <td th:text="'$' + ${product.price}">Price</td>
 
             <td><a href="#" th:href="@{'/products/details/' + ${product.id}}">Info</a></td>
+
+            <td>
+                <a href="#" th:href="@{'/cart/remove/' + ${product.id}}">
+                    <i class="fa fa-trash" style="color: black;"></i>
+                </a></td>
+
         </tr>
     </table>
 </div>

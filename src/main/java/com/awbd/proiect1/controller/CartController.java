@@ -55,5 +55,19 @@ public class CartController {
         return "redirect:/products/list";
     }
 
+    // http://localhost:8080/cart/remove/1
+    @RequestMapping("/remove/{id}")
+    public String removeFromCart(@PathVariable String id) {
 
+        Authentication auth = SecurityContextHolder.getContext()
+                .getAuthentication();
+
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(String.valueOf(UserType.CUSTOMER)))) {
+
+            cartService.removeFromCart(auth.getName(), Long.valueOf(id));
+
+        }
+
+        return "redirect:/cart/list";
+    }
 }

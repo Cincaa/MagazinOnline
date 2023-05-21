@@ -42,5 +42,12 @@ public class CartService {
         cart.getProducts().add(product);
         cartRepository.save(cart);
     }
+    public void removeFromCart(String username, Long idProduct) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Product product = productRepository.findById(idProduct).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Cart cart = user.getCart();
 
+        cart.getProducts().remove(product);
+        cartRepository.save(cart);
+    }
 }

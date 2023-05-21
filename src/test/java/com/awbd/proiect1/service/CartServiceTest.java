@@ -67,4 +67,25 @@ class CartServiceTest {
         verify(productRepository, times(1)).findById(id);
         verify(cartRepository, times(1)).save(cart);
     }
+
+    @Test
+    public void removeFromCart() {
+        User user = new User();
+        user.setId(id);
+        user.setUsername("username");
+
+        Product product = new Product();
+        product.setId(id);
+
+        Cart cart = new Cart();
+        user.setCart(cart);
+
+        when(userRepository.findByUsername("username")).thenReturn(Optional.of(user));
+        when(productRepository.findById(id)).thenReturn(Optional.of(product));
+
+        cartService.removeFromCart("username", id);
+        verify(userRepository, times(1)).findByUsername(user.getUsername());
+        verify(productRepository, times(1)).findById(id);
+        verify(cartRepository, times(1)).save(cart);
+    }
 }
