@@ -100,4 +100,19 @@ class ProductServiceTest {
         verify(productRepository, times(1)).findById(id);
         verify(productRepository, times(1)).save(product);
     }
+
+    @Test
+    public void getReviews() {
+
+        Throwable exception = assertThrows(RuntimeException.class, () -> productService.findById(id));
+        assertEquals("Product not found!", exception.getMessage());
+
+        Product product = new Product();
+        product.setId(id);
+
+        when(productRepository.findById(id)).thenReturn(Optional.of(product));
+
+        productService.getReviews(id);
+        verify(productRepository, times(2)).findById(id);
+    }
 }
